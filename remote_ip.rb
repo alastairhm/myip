@@ -5,8 +5,11 @@ require 'twitter' #https://github.com/sferik/twitter for config details
 require File.expand_path(File.join(File.dirname(__FILE__), "twitterCode.rb"))
 twitDM = "alastair_hm"
 
-remote_ip = open('http://whatismyip.akamai.com').read
+#remote_ip = open('http://whatismyip.akamai.com').read
+remote_ip = open('http://myip-ahm.herokuapp.com').read
 old_ip = File.open('remote_ip.txt', 'r').read
+
+puts remote_ip
 
 if (remote_ip != old_ip) then
     File.open('remote_ip.txt', "w") { |file|  file.write(remote_ip)}
