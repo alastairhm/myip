@@ -3,16 +3,18 @@ require 'open-uri'
 require 'twitter' #https://github.com/sferik/twitter for config details
 
 require File.expand_path(File.join(File.dirname(__FILE__), "twitterCode.rb"))
+oldfile = File.expand_path(File.join(File.dirname(__FILE__), "remote_ip.txt"))
 twitDM = "alastair_hm"
 
 #remote_ip = open('http://whatismyip.akamai.com').read
 remote_ip = open('http://myip-ahm.herokuapp.com').read
-old_ip = File.open('remote_ip.txt', 'r').read
+
+old_ip = File.open(oldfile, 'r').read
 
 puts remote_ip
 
 if (remote_ip != old_ip) then
-    File.open('remote_ip.txt', "w") { |file|  file.write(remote_ip)}
+    File.open(oldfile, "w") { |file|  file.write(remote_ip)}
 
     client = Twitter::REST::Client.new do |config|
         config.consumer_key        = @twitterCodes[0]
