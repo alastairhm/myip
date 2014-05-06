@@ -1,12 +1,9 @@
 #!/usr/bin/ruby
 require 'open-uri'
-require 'twitter' #https://github.com/sferik/twitter for config details
+require 'httparty'
 
-require File.expand_path(File.join(File.dirname(__FILE__), "twitterCode.rb"))
 oldfile = File.expand_path(File.join(File.dirname(__FILE__), "remote_ip.txt"))
-twitDM = "alastair_hm"
 
-#remote_ip = open('http://whatismyip.akamai.com').read
 remote_ip = open('http://myip-ahm.herokuapp.com').read
 
 old_ip = File.open(oldfile, 'r').read
@@ -14,17 +11,19 @@ old_ip = File.open(oldfile, 'r').read
 puts remote_ip
 
 if (remote_ip != old_ip) then
-    File.open(oldfile, "w") { |file|  file.write(remote_ip)}
+	puts "The new IP address is #{remote_ip} from #{old_ip}"
+	url = "https://sendgrid.com/api/mail.send.json"
 
-    client = Twitter::REST::Client.new do |config|
-        config.consumer_key        = @twitterCodes[0]
-        config.consumer_secret     = @twitterCodes[1]
-        config.access_token        = @twitterCodes[2]
-        config.access_token_secret = @twitterCodes[3]
-    end
+	response = HTTParty.post url, :body => {
+	  "api_user" => "API_USER",
+	  "api_key" => "API_KEY",
+	  "to" => "to@gmail.com",
+	  "from" => from@gmail.com",
+	  "subject" => "Raspberry Pi's IP has changed",
+	  "text" => "The new IP address is #{remote_ip} from #{old_ip}"
+	}
 
-    client.update("D #{twitDM} My IP address is now #{remote_ip}")
-
+	puts response.body
 else
     puts "IP addresses match"
 end
