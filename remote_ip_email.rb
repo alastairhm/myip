@@ -17,10 +17,10 @@ if (remote_ip != old_ip) then
 		url = "https://sendgrid.com/api/mail.send.json"
 
 	response = HTTParty.post url, :body => {
-	  "api_user" => "alastairmontgomery",
-	  "api_key" => "^O8%k2WF#to@E76f",
-	  "to" => "doodle.m@gmail.com",
-	  "from" => "alastair@raspberry-pi.me",
+	  "api_user" => "",
+	  "api_key" => "",
+	  "to" => "",
+	  "from" => "",
 	  "subject" => "Raspberry Pi's IP has changed",
 	  "text" => "The new IP address is #{remote_ip} from #{old_ip}"
 	}
