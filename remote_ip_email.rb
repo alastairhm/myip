@@ -11,8 +11,10 @@ old_ip = File.open(oldfile, 'r').read
 puts remote_ip
 
 if (remote_ip != old_ip) then
+	File.open(oldfile, "w") { |file|  file.write(remote_ip)}
+
 	puts "The new IP address is #{remote_ip} from #{old_ip}"
-	url = "https://sendgrid.com/api/mail.send.json"
+		url = "https://sendgrid.com/api/mail.send.json"
 
 	response = HTTParty.post url, :body => {
 	  "api_user" => "alastairmontgomery",
